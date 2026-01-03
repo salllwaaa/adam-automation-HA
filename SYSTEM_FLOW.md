@@ -4,9 +4,9 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                        INPUT FILES                                   │
+│                        INPUT FILES (Input/ folder)                   │
 ├─────────────────────────────────────────────────────────────────────┤
-│  New Availability.xlsx        │  The Current inv.xlsx               │
+│  Input/New Availability.xlsx  │  Input/Current adam inv.xlsx        │
 │  - Park Central Sheet         │  - default_code column              │
 │  - The Valleys Sheet          │  - 107 existing units               │
 │  - SLW-Villas Sheet          │                                      │
@@ -21,9 +21,9 @@
 │                    STEP 1: EXCEL LOADER                              │
 │                  (processors/excel_loader.py)                        │
 ├─────────────────────────────────────────────────────────────────────┤
-│  ✓ Load New Availability.xlsx with all sheets                       │
+│  ✓ Load Input/New Availability.xlsx with all sheets                 │
 │  ✓ Smart header detection (finds "UNIT CODE" row)                   │
-│  ✓ Load The Current inv.xlsx                                        │
+│  ✓ Load Input/Current adam inv.xlsx                                 │
 │  ✓ Extract existing unit codes for comparison                       │
 │  ✓ Clean data (remove NaN columns, empty rows)                      │
 └─────────────────────────────────────────────────────────────────────┘

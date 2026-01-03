@@ -52,7 +52,8 @@ def get_project_short_name(unit_code: str) -> str:
     """
     project = identify_project(unit_code)
     
-    if 'Park Central' in project:
+    # Case-insensitive check for Park Central (handles both "Park Central" and "Park central")
+    if 'Park' in project and 'central' in project.lower():
         return 'Park_Central'
     elif 'Valleys' in project:
         return 'The_Valleys'

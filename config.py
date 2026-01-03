@@ -43,14 +43,14 @@ BEDROOM_MAPPING = {
 
 # Project identification patterns
 PROJECT_PATTERNS = {
-    'PC': 'Park Central - Mostakbal City',
+    'PC': 'Park central - Mostakbal City',
     'VALL': 'VAL: The Valleys',
     'SLW': 'SLW: SwanLake West',
 }
 
 # Project finishing rules
 PROJECT_FINISHING = {
-    'Park Central - Mostakbal City': 'Fully Finished',
+    'Park central - Mostakbal City': 'Fully Finished',
     'VAL: The Valleys': 'Fully Finished',
     'SLW: SwanLake West': 'TBD',  # Will be updated based on unit code rules
 }
@@ -105,8 +105,8 @@ SHEET_PATTERNS = {
 }
 
 # File paths
-NEW_AVAILABILITY_FILE = 'New Availability.xlsx'
-CURRENT_INVENTORY_FILE = 'The Current inv.xlsx'
+NEW_AVAILABILITY_FILE = 'Input/New Availability.xlsx'
+CURRENT_INVENTORY_FILE = 'Input/Current adam inv.xlsx'
 OUTPUT_DIRECTORY = 'output'
 LOG_DIRECTORY = 'logs'
 
@@ -120,10 +120,13 @@ MAINTENANCE_FEE_PERCENTAGE = 0.10  # 10% of price
 VALLEYS_UNIT_TYPE_BEDROOMS = {
     'TOWNHOUSE (M)': 3,
     'TOWNHOUSE M': 3,
+    'TOWNHOUSE B': 3,  # Townhouse Middle variant
     'TOWN HOUSE (M)': 3,
     'TOWN HOUSE M': 3,
     'TOWNHOUSE (C)': 4,
     'TOWNHOUSE C': 4,
+    'TOWNHOUSE A': 4,  # Townhouse Corner variant
+    'TOWNHOUSE D': 4,  # Townhouse Corner variant
     'TOWN HOUSE (C)': 4,
     'TOWN HOUSE C': 4,
     'TWIN HOUSE': 4,

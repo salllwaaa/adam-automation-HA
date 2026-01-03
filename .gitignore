@@ -42,9 +42,13 @@ output/*
 !output/.gitkeep
 logs/*
 !logs/.gitkeep
+
+# Excel files - ignore all except in Input folder
 *.xlsx
-!New Availability.xlsx
-!The Current inv.xlsx
+!Input/*.xlsx
+
+# Old inputs folder - archive old data
+old inputs/
 
 # Temporary files
 *.tmp

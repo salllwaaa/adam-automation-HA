@@ -44,9 +44,9 @@ pip install -r requirements.txt
 
 ### Usage
 
-1. Place your input files in the project root:
-   - `New Availability.xlsx` - Latest availability data
-   - `The Current inv.xlsx` - Current inventory
+1. Place your input files in the `Input/` folder:
+   - `Input/New Availability.xlsx` - Latest availability data
+   - `Input/Current adam inv.xlsx` - Current inventory
 
 2. Run the automation:
 ```bash
@@ -55,7 +55,8 @@ python main.py
 
 3. Find outputs in the `output/` directory:
    - `Current_Inventory_Updated_YYYYMMDD.xlsx` - Updated inventory with states
-   - `{Project}_New_Units_YYYYMMDD.xlsx` - New units by project (when applicable)
+   - `New_Units_{Project}_YYYYMMDD.xlsx` - New units by project (when applicable)
+   - `processing_summary.txt` - Processing summary report
 
 ---
 

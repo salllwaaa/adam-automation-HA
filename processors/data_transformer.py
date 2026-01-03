@@ -81,7 +81,8 @@ class DataTransformer:
         unit_type = row.get('UNIT TYPE') or row.get('UNIT_TYPE') or row.get('Unit Type') or ''
         floor_value = row.get('FLOOR') or row.get('Floor') or ''
         gross_bua = row.get('GROSS BUA') or row.get('GROSS AREA') or row.get('GROSS_BUA') or row.get('BUA') or row.get('Gross BUA') or 0
-        total_price = row.get('TOTAL PRICE') or row.get('Price') or row.get('PRICE') or row.get('UNIT PRICE') or row.get('TOTAL PRICE - 7 Years') or row.get('TOTAL PRICE - 10 Years') or 0
+        # Prioritize Final Price (for Valleys), then TOTAL PRICE (for Park Central and SLW)
+        total_price = row.get('Final Price') or row.get('FINAL PRICE') or row.get('TOTAL PRICE') or row.get('Price') or row.get('PRICE') or row.get('UNIT PRICE') or row.get('TOTAL PRICE - 7 Years') or row.get('TOTAL PRICE - 10 Years') or 0
         num_bedrooms = row.get('NUMBER OF BEDROOMS') or row.get('Number of Bedrooms') or ''
         
         # Validate required fields
@@ -111,13 +112,13 @@ class DataTransformer:
         # Generate name using the extracted bedroom count
         name = generate_unit_name(str(unit_type), default_code, number_of_rooms)
         
-        # Extract unit type (APARTMENT, PENTHOUSE, DUPLEX, etc.)
+        # Extract unit type (Apartment, Penthouse, Duplex, etc.)
         unit_type_extracted = ''
         if unit_type:
             # Split by hyphen or space and get first part
             parts = str(unit_type).split('-')
             if parts:
-                unit_type_extracted = parts[0].strip()
+                unit_type_extracted = parts[0].strip().title()  # Convert to title case
         
         # Create output dictionary
         transformed = {
@@ -161,12 +162,13 @@ class DataTransformer:
         for project_name in transformed_df['project'].unique():
             project_df = transformed_df[transformed_df['project'] == project_name].copy()
             
-            # Determine short name for output file
-            if 'Park Central' in project_name:
+            # Determine short name for output file (case-insensitive check)
+            project_name_lower = project_name.lower()
+            if 'park' in project_name_lower and 'central' in project_name_lower:
                 short_name = 'Park_Central'
-            elif 'Valleys' in project_name:
+            elif 'valleys' in project_name_lower:
                 short_name = 'The_Valleys'
-            elif 'SLW' in project_name or 'SwanLake' in project_name:
+            elif 'slw' in project_name_lower or 'swanlake' in project_name_lower:
                 short_name = 'SLW'
             else:
                 short_name = 'Unknown'
