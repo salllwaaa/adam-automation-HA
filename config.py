@@ -41,18 +41,87 @@ BEDROOM_MAPPING = {
     'EIGHT BEDROOMS': 8,
 }
 
-# Project identification patterns
+# Project identification patterns (from unit code)
 PROJECT_PATTERNS = {
     'PC': 'Park central - Mostakbal City',
     'VALL': 'VAL: The Valleys',
     'SLW': 'SLW: SwanLake West',
 }
 
+# Sheet name to project mapping (for all projects)
+SHEET_TO_PROJECT_MAPPING = {
+    # Existing projects
+    'Park Central': 'Park central - Mostakbal City',
+    'The Valleys': 'VAL: The Valleys',
+    
+    # SLW (SwanLake West)
+    'SLW-Boomerang': 'SLW: SwanLake West',
+    'SLW-Villas': 'SLW: SwanLake West',
+    'SLW-Monos': 'SLW: SwanLake West',
+    'SLW-Solos': 'SLW: SwanLake West',
+    'SLW-Twains': 'SLW: SwanLake West',
+    'SLW-Shimmers': 'SLW: SwanLake West',
+    
+    # SwanLake North (SLN)
+    'SLN': 'SLN: SwanLake North',
+    'SLNX': 'SLN: SwanLake North',
+    
+    # SwanLake Residences (SLR)
+    'The Giselle': 'SLR: SwanLake Residences - The Giselle',
+    'The Scarlet': 'SLR: SwanLake Residences - The Scarlet',
+    'The Iris': 'SLR: SwanLake Residences - The Iris',
+    'The Phoenix': 'SLR: SwanLake Residences - The Phoenix',
+    'The Selina': 'SLR: SwanLake Residences - The Selina',
+    'The AMAIA': 'SLR: SwanLake Residences - The AMAIA',
+    
+    # SwanLake El Gouna (SLG)
+    'SLG - ENCORE': 'SLG: SwanLake El Gouna - ENCORE',
+    'SLG': 'SLG: SwanLake El Gouna',
+    
+    # Haptown
+    'PARKVIEW': 'Haptown - PARKVIEW',
+    'Park 226': 'Haptown - Park 226',
+    'SEASONS': 'Haptown - SEASONS',
+    
+    # Other projects
+    'KEYS-52': 'Keys 52',
+    'LVG': 'Little Venice Gardens',
+    'SLO': 'SwanLake October',
+    'Little Venice': 'Little Venice',
+}
+
 # Project finishing rules
 PROJECT_FINISHING = {
+    # Existing projects
     'Park central - Mostakbal City': 'Fully Finished',
     'VAL: The Valleys': 'Fully Finished',
     'SLW: SwanLake West': 'TBD',  # Will be updated based on unit code rules
+    
+    # SwanLake North (SLN)
+    'SLN: SwanLake North': 'Core and shell',
+    
+    # SwanLake Residences (SLR) - All fully finished
+    'SLR: SwanLake Residences - The Giselle': 'Fully Finished',
+    'SLR: SwanLake Residences - The Scarlet': 'Fully Finished',
+    'SLR: SwanLake Residences - The Iris': 'Fully Finished',
+    'SLR: SwanLake Residences - The Phoenix': 'Fully Finished',
+    'SLR: SwanLake Residences - The Selina': 'Fully Finished',
+    'SLR: SwanLake Residences - The AMAIA': 'Fully Finished',
+    
+    # SwanLake El Gouna (SLG)
+    'SLG: SwanLake El Gouna - ENCORE': 'Fully Finished',
+    'SLG: SwanLake El Gouna': 'Fully Finished',
+    
+    # Haptown
+    'Haptown - PARKVIEW': 'Fully Finished',
+    'Haptown - Park 226': 'Fully Finished',
+    'Haptown - SEASONS': 'Fully Finished',
+    
+    # Other projects
+    'Keys 52': 'Finishing Ready',  # Has PRICE FR and PRICE FF columns
+    'Little Venice Gardens': 'Unfinished',
+    'SwanLake October': 'Core and shell',
+    'Little Venice': 'Core and shell',
 }
 
 # Developer name
@@ -192,4 +261,57 @@ SLW_FINISHING_RULES = {
         'finishing': 'Fully Finished',
         'description': 'Shimmers lagoon apartments'
     }
+}
+
+# Unit Type Defaults (for sheets missing unit type column)
+UNIT_TYPE_DEFAULTS = {
+    'SLN': 'Villa',
+    'SLW-Boomerang': 'Apartment',
+    'SLW-Twains': 'Apartment',
+    'SLW-Shimmers': 'Apartment',
+    'LVG': 'Villa',
+    'SLO': 'Villa',
+    'Little Venice': 'Villa',
+    'Park 226': 'Apartment',
+    'SLG': 'Apartment',
+}
+
+# Price Column Priority (different sheets have different price columns)
+PRICE_COLUMN_PRIORITY = {
+    'default': ['Final Price', 'Price', 'PRICE', 'Total Price', 'Unit Price', 'TOTAL PRICE', 'Total Unit Price'],
+    'SLW-Villas': ['TOTAL PRICE - 10 Years', 'TOTAL PRICE - 7 Years'],
+    'SLW-Monos': ['TOTAL PRICE - 7 Years'],
+    'SLW-Solos': ['TOTAL PRICE - 7 Years'],
+    'SLW-Twains': ['TOTAL PRICE - 7 Years'],
+    'SLW-Shimmers': ['TOTAL PRICE - 7 Years'],
+    'KEYS-52': ['PRICE FR', 'PRICE FF'],  # FR = Finishing Ready (prioritized)
+    'SLG - ENCORE': ['TOTAL PRICE', 'TOTAL PRICE 2', 'TOTAL PRICE 3'],
+}
+
+# Bedroom defaults for villas without bedroom info
+BEDROOM_DEFAULTS = {
+    'LVG': 4,
+    'SLO': 5,
+    'Little Venice': 3,
+    'SLN': 4,
+    'SLNX': 4,
+}
+
+# Additional bedroom mappings for new projects
+# SLR Projects - bedroom count in unit type text (e.g., "PENTHOUSE-Three Bedrooms")
+SLR_UNIT_TYPE_BEDROOMS = {
+    # Will use text extraction from unit type
+}
+
+# SLG Projects
+SLG_UNIT_TYPE_BEDROOMS = {
+    'PENTHOUSE-THREE BEDROOMS': 3,
+    'PENTHOUSE-FOUR BEDROOMS': 4,
+    'APARTMENT-TWO BEDROOMS': 2,
+    'APARTMENT-THREE BEDROOMS': 3,
+}
+
+# Haptown SEASONS
+SEASONS_UNIT_TYPE_BEDROOMS = {
+    'TOWNHOUSE': 4,
 }

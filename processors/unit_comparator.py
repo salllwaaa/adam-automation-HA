@@ -39,7 +39,7 @@ class UnitComparator:
         # Try to find the unit code column with variations
         actual_column = None
         for col in df.columns:
-            if isinstance(col, str) and col.upper() in ['UNIT CODE', 'UNIT CODES', 'UNIT_CODE', 'UNIT_CODES']:
+            if isinstance(col, str) and col.upper() in ['UNIT CODE', 'UNIT CODES', 'UNIT_CODE', 'UNIT_CODES', 'UNIT NAME', 'UNIT']:
                 actual_column = col
                 break
         
@@ -156,7 +156,7 @@ class UnitComparator:
         # Find ALL unit code columns (there might be multiple with different names)
         unit_code_columns = []
         for col in new_availability_df.columns:
-            if isinstance(col, str) and col.upper() in ['UNIT CODE', 'UNIT CODES', 'UNIT_CODE', 'UNIT_CODES']:
+            if isinstance(col, str) and col.upper() in ['UNIT CODE', 'UNIT CODES', 'UNIT_CODE', 'UNIT_CODES', 'UNIT NAME', 'UNIT']:
                 unit_code_columns.append(col)
         
         new_codes = set()
