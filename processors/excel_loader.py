@@ -199,16 +199,3 @@ class ExcelLoader:
         
         logger.info(f"Found {len(matching_sheets)} sheets for {project_type}: {matching_sheets}")
         return matching_sheets
-    
-    def get_all_project_sheets(self) -> List[str]:
-        """
-        Get all sheets except Office Park.
-        
-        Returns:
-            List of all sheet names to process
-        """
-        all_sheets = self.get_sheet_names(self.new_availability_path)
-        # Exclude Office Park
-        project_sheets = [s for s in all_sheets if s.upper() != 'OFFICE PARK']
-        logger.info(f"Found {len(project_sheets)} sheets to process (excluding Office Park)")
-        return project_sheets

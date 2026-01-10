@@ -11,11 +11,7 @@ from config import (
     DEVELOPER,
     VALLEYS_UNIT_TYPE_BEDROOMS,
     SLW_UNIT_TYPE_BEDROOMS,
-    SLW_TWAINS_BEDROOMS,
-    PROJECT_FINISHING,
-    BEDROOM_DEFAULTS,
-    SLG_UNIT_TYPE_BEDROOMS,
-    SEASONS_UNIT_TYPE_BEDROOMS
+    SLW_TWAINS_BEDROOMS
 )
 from utils.project_identifier import identify_project
 
@@ -90,7 +86,7 @@ def lookup_bedroom_by_unit_type(unit_type: str, project: str) -> int:
     return 0
 
 
-def extract_bedroom_count(unit_type: str, project: str = None, sheet_name: str = None) -> int:
+def extract_bedroom_count(unit_type: str, project: str = None) -> int:
     """
     Extract number of bedrooms from unit type string.
     
@@ -98,9 +94,9 @@ def extract_bedroom_count(unit_type: str, project: str = None, sheet_name: str =
         unit_type: Unit type with various formats:
         - 'PENTHOUSE-Three Bedrooms'
         - 'Town House (M) / 3 Beds'
-        - 'Apartment-4 Bedroom'
-        - 'MONOS - Apartment 4 Bedrooms'
-        - '3.0' (numeric from SLG)
+        - 'Standalone Villa G / 5 Beds'
+        - 'TOWNHOUSE (M) - 3 BED'
+        - 'STANDALONE SV - A 3+living room'
     
     Returns:
         Number of bedrooms as integer
@@ -108,15 +104,12 @@ def extract_bedroom_count(unit_type: str, project: str = None, sheet_name: str =
     Examples:
         >>> extract_bedroom_count('PENTHOUSE-Three Bedrooms')
         3
-        >>> extract_bedroom_count('Apartment-4 Bedroom')
-        4
-        >>> extract_bedroom_count('MONOS - Apartment 4 Bedrooms')
-        4
+        >>> extract_bedroom_count('Town House (M) / 3 Beds')
+        3
+        >>> extract_bedroom_count('Standalone Villa G / 5 Beds')
+        5
     """
     if not unit_type:
-        # Try to get default from sheet name
-        if sheet_name and sheet_name in BEDROOM_DEFAULTS:
-            return BEDROOM_DEFAULTS[sheet_name]
         return 0
     
     unit_type_upper = str(unit_type).upper().strip()
@@ -147,49 +140,26 @@ def extract_bedroom_count(unit_type: str, project: str = None, sheet_name: str =
     if number_match:
         return int(number_match.group(1))
     
-    # Pattern 5: Just a number (including decimals like "3.0")
-    try:
-        num = float(unit_type_upper.strip())
+    # Pattern 5: Just a number in the NUMBER OF BEDROOMS column
+    if unit_type_upper.strip().isdigit():
+        num = int(unit_type_upper.strip())
         if 0 <= num <= 10:
-            return int(num)
-    except ValueError:
-        pass
+            return num
     
-    # Pattern 6: "Apartment-4 Bedroom" or "MONOS - Apartment 4 Bedrooms"
-    # Look for digit followed by "Bedroom" (singular or plural)
-    number_match = re.search(r'-\s*(\d+)\s*BEDROOM', unit_type_upper)
-    if number_match:
-        return int(number_match.group(1))
-    
-    # Pattern 7: Last resort - find any single digit number (but be careful)
+    # Pattern 6: Last resort - find any single digit number (but be careful)
     # Only use if unit type contains villa/house/apartment keywords
-    if any(keyword in unit_type_upper for keyword in ['VILLA', 'HOUSE', 'APARTMENT', 'PENTHOUSE', 'DUPLEX', 'TWIN', 'TOWN', 'MONOS', 'SOLOS']):
+    if any(keyword in unit_type_upper for keyword in ['VILLA', 'HOUSE', 'APARTMENT', 'PENTHOUSE', 'DUPLEX', 'TWIN', 'TOWN']):
         number_match = re.search(r'\b(\d)\b', unit_type_upper)
         if number_match:
             num = int(number_match.group(1))
             if 1 <= num <= 10:  # Must be reasonable bedroom count
                 return num
     
-    # Pattern 8: Lookup from predefined mappings (Valleys, SLW, SLG, Seasons)
+    # Pattern 7: Lookup from predefined mappings (Valleys & SLW)
     if project:
         mapped_bedrooms = lookup_bedroom_by_unit_type(unit_type, project)
         if mapped_bedrooms > 0:
             return mapped_bedrooms
-    
-    # Pattern 9: Check SLG and Seasons specific mappings
-    if sheet_name:
-        if 'SLG' in sheet_name or 'ENCORE' in sheet_name:
-            for key, bedrooms in SLG_UNIT_TYPE_BEDROOMS.items():
-                if key.upper() in unit_type_upper:
-                    return bedrooms
-        elif 'SEASONS' in sheet_name:
-            for key, bedrooms in SEASONS_UNIT_TYPE_BEDROOMS.items():
-                if key.upper() in unit_type_upper:
-                    return bedrooms
-    
-    # Last resort: check for default bedroom count based on sheet
-    if sheet_name and sheet_name in BEDROOM_DEFAULTS:
-        return BEDROOM_DEFAULTS[sheet_name]
     
     return 0
 
@@ -246,14 +216,13 @@ def calculate_maintenance_fee(price: float, percentage: float = 0.10) -> float:
     return float(price) * percentage
 
 
-def determine_finishing(project: str, unit_code: str = '', explicit_finishing: str = None) -> str:
+def determine_finishing(project: str, unit_code: str = '') -> str:
     """
     Determine finishing based on project and unit code.
     
     Args:
         project: Project name
         unit_code: Unit code (used for SLW specific rules)
-        explicit_finishing: Explicit finishing value from data (if available)
     
     Returns:
         Finishing status
@@ -265,21 +234,14 @@ def determine_finishing(project: str, unit_code: str = '', explicit_finishing: s
     - 3000s up to 7000s: Villas Phase 2 (Core and shell, 4 years delivery)
     - 8000s: Shimmers lagoon apartments fully finished
     """
-    # If explicit finishing is provided in data, use it
-    if explicit_finishing and str(explicit_finishing).strip():
-        return str(explicit_finishing).strip()
+    if 'Park Central' in project or 'Valleys' in project:
+        return 'Fully Finished'
     
-    # Check PROJECT_FINISHING mapping first
-    if project in PROJECT_FINISHING:
-        finishing = PROJECT_FINISHING[project]
-        
-        # If it's a simple string, return it
-        if isinstance(finishing, str) and finishing != 'TBD':
-            return finishing
-    
-    # Special handling for SLW (complex rules based on unit number)
-    if 'SLW' in project or 'SwanLake West' in project:
+    elif 'SLW' in project or 'SwanLake' in project:
         # Extract number from unit code for SLW projects
+        import re
+        
+        # Try to find a 4-digit number in the unit code
         number_match = re.search(r'(\d{4})', unit_code)
         if number_match:
             unit_number = int(number_match.group(1))
@@ -299,7 +261,6 @@ def determine_finishing(project: str, unit_code: str = '', explicit_finishing: s
         # If no number found or doesn't match ranges, return default
         return 'Fully Finished'
     
-    # Default fallback
     return 'Fully Finished'
 
 
