@@ -152,15 +152,16 @@ class DataTransformer:
         
         return transformed
     
-    def transform_by_project(self, df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
+    def transform_by_project(self, df: pd.DataFrame, sheet_name: str = None) -> Dict[str, pd.DataFrame]:
         """
         Transform units and group by project.
         
         Args:
             df: DataFrame with source data
+            sheet_name: Optional sheet name to help identify project
         
         Returns:
-            Dictionary of {project_short_name: transformed_df}
+            Dictionary of {project_name: transformed_df}
         """
         if df.empty:
             return {}
@@ -171,21 +172,18 @@ class DataTransformer:
         if transformed_df.empty:
             return {}
         
-        # Group by project
+        # Group by project - use the project name directly (already formatted for file naming)
         grouped = {}
         for project_name in transformed_df['project'].unique():
             project_df = transformed_df[transformed_df['project'] == project_name].copy()
             
-            # Determine short name for output file (case-insensitive check)
-            project_name_lower = project_name.lower()
-            if 'park' in project_name_lower and 'central' in project_name_lower:
-                short_name = 'Park_Central'
-            elif 'valleys' in project_name_lower:
-                short_name = 'The_Valleys'
-            elif 'slw' in project_name_lower or 'swanlake' in project_name_lower:
-                short_name = 'SLW'
-            else:
-                short_name = 'Unknown'
+            # Use project name directly (already cleaned/formatted by project_identifier)
+            # Replace any remaining spaces with underscores for file naming
+            short_name = project_name.replace(' ', '_').replace(':', '_').replace('-', '_')
+            
+            # Handle Unknown projects - use sheet name if available
+            if short_name == 'Unknown' and sheet_name:
+                short_name = sheet_name.replace(' ', '_').replace('-', '_')
             
             grouped[short_name] = project_df
             logger.info(f"Grouped {len(project_df)} units for project: {short_name}")

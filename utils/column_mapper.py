@@ -225,7 +225,7 @@ def determine_finishing(project: str, unit_code: str = '') -> str:
         unit_code: Unit code (used for SLW specific rules)
     
     Returns:
-        Finishing status
+        Finishing status (empty string if no rule defined for the project)
     
     SLW Finishing Rules (SwanLake West - October):
     - 0100s to 0900s: Villas phase 1 (Core and shell and near delivery)
@@ -258,10 +258,11 @@ def determine_finishing(project: str, unit_code: str = '') -> str:
             elif unit_number >= 8000:
                 return 'Fully Finished'  # Shimmers lagoon apartments
         
-        # If no number found or doesn't match ranges, return default
-        return 'Fully Finished'
+        # If no number found or doesn't match ranges for SLW, leave empty
+        return ''
     
-    return 'Fully Finished'
+    # For all other projects without defined rules, leave finishing empty
+    return ''
 
 
 def clean_numeric_value(value) -> Optional[float]:

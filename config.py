@@ -49,6 +49,7 @@ PROJECT_PATTERNS = {
 }
 
 # Project finishing rules
+# NOTE: Projects not listed here will have an EMPTY finishing column
 PROJECT_FINISHING = {
     'Park central - Mostakbal City': 'Fully Finished',
     'VAL: The Valleys': 'Fully Finished',

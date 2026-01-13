@@ -170,61 +170,53 @@ def main():
         print("[3/6] Initializing unit comparator...")
         comparator = UnitComparator(existing_codes)
         
-        # Step 4: Process each project
-        print("[4/6] Processing projects and identifying new units...")
-        logger.info("Processing projects")
+        # Step 4: Process ALL sheets automatically
+        print("[4/6] Processing ALL sheets and identifying new units...")
+        logger.info("Processing all sheets")
         
-        projects = ['Park Central', 'The Valleys', 'SLW']
+        # Auto-detect all sheets from the New Availability file
+        all_sheets = loader.get_sheet_names(loader.new_availability_path)
+        print(f"  >> Found {len(all_sheets)} sheets: {', '.join(all_sheets)}")
+        
         all_new_units = {}
         all_new_availability_dfs = []  # Collect all new availability data for state tracking
+        transformer = DataTransformer()  # Single transformer instance
         
-        for project in projects:
-            print(f"\n  Processing: {project}")
-            logger.info(f"Processing project: {project}")
+        for sheet_name in all_sheets:
+            print(f"\n  Processing sheet: {sheet_name}")
+            logger.info(f"Processing sheet: {sheet_name}")
             
-            # Get sheets for this project
-            sheets = loader.filter_project_sheets(project)
-            
-            if not sheets:
-                logger.warning(f"No sheets found for {project}")
-                print(f"    [!] No sheets found")
+            # Load sheet data
+            sheet_data = loader.load_new_availability(sheet_name)
+            if sheet_name not in sheet_data:
+                logger.warning(f"Could not load sheet: {sheet_name}")
+                print(f"    [!] Could not load sheet")
                 continue
             
-            print(f"    Found {len(sheets)} sheet(s): {', '.join(sheets)}")
-            
-            # Combine all sheets for this project
-            project_dfs = []
-            for sheet in sheets:
-                sheet_data = loader.load_new_availability(sheet)
-                if sheet in sheet_data:
-                    df = sheet_data[sheet]
-                    if not df.empty:
-                        project_dfs.append(df)
-                        all_new_availability_dfs.append(df)  # Collect for state tracking
-            
-            if not project_dfs:
-                logger.warning(f"No data found for {project}")
-                print(f"    [!] No data available")
+            df = sheet_data[sheet_name]
+            if df.empty:
+                logger.warning(f"Empty sheet: {sheet_name}")
+                print(f"    [!] Empty sheet")
                 continue
             
-            # Combine all data for this project
-            combined_df = pd.concat(project_dfs, ignore_index=True)
-            print(f"    Total units: {len(combined_df)}")
+            all_new_availability_dfs.append(df)  # Collect for state tracking
+            print(f"    Total units in sheet: {len(df)}")
             
             # Find new units
-            new_units_df = comparator.find_new_units(combined_df)
+            new_units_df = comparator.find_new_units(df)
             print(f"    New units: {len(new_units_df)}")
             
             if not new_units_df.empty:
-                # Transform to standard format
-                transformer = DataTransformer()
-                transformed_by_project = transformer.transform_by_project(new_units_df)
+                # Transform to standard format and group by project (pass sheet_name for identification)
+                transformed_by_project = transformer.transform_by_project(new_units_df, sheet_name=sheet_name)
                 
-                # Add to results
-                all_new_units.update(transformed_by_project)
-                
+                # Merge with existing results (combine units from same project across sheets)
                 for proj_name, proj_df in transformed_by_project.items():
-                    print(f"    >> Transformed {len(proj_df)} units for {proj_name}")
+                    if proj_name in all_new_units:
+                        all_new_units[proj_name] = pd.concat([all_new_units[proj_name], proj_df], ignore_index=True)
+                    else:
+                        all_new_units[proj_name] = proj_df
+                    print(f"    >> Added {len(proj_df)} units to {proj_name}")
         
         # Step 5: Generate updated current inventory with state column
         print("\n[5/6] Generating updated inventory with availability states...")
