@@ -3,7 +3,7 @@
 
 ---
 
-## 🔥 CAMPAIGN OVERVIEW
+## CAMPAIGN OVERVIEW
 
 **Campaign Concept:** "7 Years. No Rush."
 
@@ -13,7 +13,7 @@
 
 ---
 
-## 💎 THE OFFER
+## THE OFFER
 
 ### Payment Structure
 
@@ -26,7 +26,7 @@
 
 ---
 
-## 🎯 WHY THIS MATTERS
+## WHY THIS MATTERS
 
 ### First Time Ever
 - **7-year payment plan** has never been offered in El Gouna before
@@ -50,7 +50,7 @@
 
 ---
 
-## 🏖️ WHAT YOU GET
+## WHAT YOU GET
 
 ### Crystal Lagoon Living
 - 15,000 SQM crystal lagoon with sandy beach
@@ -69,7 +69,7 @@
 
 ---
 
-## 💬 HIGH-IMPACT MESSAGING
+## HIGH-IMPACT MESSAGING
 
 Use these conversation starters:
 
@@ -85,7 +85,7 @@ Use these conversation starters:
 
 ---
 
-## 🎁 PERFECT FOR
+## PERFECT FOR
 
 ### First-Time Buyers
 - Lowest down payment in El Gouna (5%)
@@ -109,7 +109,7 @@ Use these conversation starters:
 
 ---
 
-## 📊 PAYMENT BREAKDOWN EXAMPLE
+## PAYMENT BREAKDOWN EXAMPLE
 
 **For a 30M EGP Unit:**
 
@@ -129,7 +129,7 @@ Use these conversation starters:
 
 ---
 
-## 🚀 THE ADAM AI DIFFERENCE
+## THE ADAM AI DIFFERENCE
 
 ### Traditional Experience
 - Leave phone number
@@ -147,7 +147,7 @@ Use these conversation starters:
 
 ---
 
-## 📋 KEY TALKING POINTS FOR ADAM
+## KEY TALKING POINTS FOR ADAM
 
 ### Opening Hook
 "First time ever in El Gouna - you can now own a fully-finished unit with 7-year quarterly installments starting with just 5% down payment."
@@ -166,7 +166,7 @@ Use these conversation starters:
 
 ---
 
-## ⚠️ IMPORTANT NOTES
+## IMPORTANT NOTES
 
 ### Compliance
 - All prices subject to availability
@@ -188,7 +188,7 @@ Use these conversation starters:
 
 ---
 
-## 📌 QUICK REFERENCE
+## QUICK REFERENCE
 
 **Campaign Name:** "7 Years. No Rush."  
 **Key Innovation:** First 7-year quarterly plan in El Gouna  

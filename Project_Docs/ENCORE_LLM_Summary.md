@@ -57,12 +57,12 @@
 ## FINISHING & FEATURES
 
 **All Units Include:**
-- ✅ Air Conditioning (A/C systems)
-- ✅ Kitchen Cabinets
-- ✅ Wardrobes
-- ✅ Porcelain Floors
-- ✅ 100% Lagoon Views
-- ✅ Fully Finished (Move-in Ready)
+- Air Conditioning (A/C systems)
+- Kitchen Cabinets
+- Wardrobes
+- Porcelain Floors
+- 100% Lagoon Views
+- Fully Finished (Move-in Ready)
 
 ---
 
@@ -83,7 +83,7 @@
 
 ## PAYMENT PLANS
 
-### 🔥 NEW: 7-Year Payment Plan (First Time Ever in El Gouna)
+### NEW: 7-Year Payment Plan (First Time Ever in El Gouna)
 - **Down Payment:** 5%
 - **After 3 Months:** 5%
 - **Balance:** Quarterly installments over 7 years
@@ -136,26 +136,26 @@
 
 **"7 Years. No Rush."**
 
-✨ **First Time Ever in El Gouna:**
+**First Time Ever in El Gouna:**
 - 7-year payment plan never offered before in El Gouna
 - Most flexible payment structure in the market
 
-💰 **Ultra-Low Entry:**
+**Ultra-Low Entry:**
 - Only 5% down payment
 - Only 5% after 3 months
 - Total 10% in first 3 months
 
-📅 **Quarterly Installments:**
+**Quarterly Installments:**
 - No monthly pressure
 - Pay every 3 months
 - 90% spread over 7 years
 
-🏖️ **Immediate Lifestyle:**
+**Immediate Lifestyle:**
 - Fully finished units
 - 2-year delivery
 - Crystal lagoon views from day one
 
-💎 **Or Go Cash:**
+**Or Go Cash:**
 - 22.1% cash discount
 - Substantial savings for immediate buyers
 
